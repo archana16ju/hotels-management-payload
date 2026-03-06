@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-export const Tables: CollectionConfig = {
+const Tables: CollectionConfig = {
   slug: 'tables',
 
   admin: {
@@ -14,7 +14,6 @@ export const Tables: CollectionConfig = {
       required: true,
       label: 'Title',
     },
-
     {
       name: 'slug',
       type: 'text',
@@ -24,7 +23,6 @@ export const Tables: CollectionConfig = {
         readOnly: true,
       },
     },
-
     {
       name: 'sections',
       type: 'array',
@@ -50,15 +48,16 @@ export const Tables: CollectionConfig = {
         if (data?.displayName) {
           data.slug = data.displayName
             .toLowerCase()
-            .replace(/ /g, '-')      
-            .replace(/[^\w-]+/g, '') 
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]+/g, '')
         }
-        
 
         return data
       },
     ],
   },
+
+  timestamps: true,
 }
 
-export default Tables;
+export default Tables
