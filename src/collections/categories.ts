@@ -61,3 +61,5 @@ export const Categories: CollectionConfig = {
     },
   ],
 }
+
+export default Categories;

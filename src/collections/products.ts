@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { generateBarcode } from '../hooks/generateBarcode';
-import { ProductActionButton } from '../payload/components/ProductActionButton';
+import { ProductActionButton } from '../components/ProductActionButton';
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -198,3 +198,5 @@ hooks: {
   ],
 },
 }
+
+export default Products;

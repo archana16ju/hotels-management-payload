@@ -159,3 +159,5 @@ export const QrSettings: CollectionConfig = {
 
   ],
 }
+
+export default QrSettings;

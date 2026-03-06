@@ -60,3 +60,5 @@ export const Tables: CollectionConfig = {
     ],
   },
 }
+
+export default Tables;
