@@ -13,7 +13,7 @@ import {Categories}from './collections/categories';
 import CompanyProfile from './collections/CompanyProfile';
 import {QrSettings} from './collections/QrSettings';
 import {Tables} from './collections/Tables';
-import {Products} from './collections/products';
+import  Products from './collections/products';
 import Payments from './collections/payments';
 import Reviews from './collections/reviews';
 import PaymentGateways from './collections/PaymentGateways';

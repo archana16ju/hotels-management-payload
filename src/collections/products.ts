@@ -1,8 +1,7 @@
-import type { CollectionConfig } from 'payload';
-import { generateBarcode } from '../hooks/generateBarcode';
-import { ProductActionButton } from '../components/ProductActionButton';
+import type { CollectionConfig } from 'payload'
+import { generateBarcode } from '../hooks/generateBarcode'
 
-export const Products: CollectionConfig = {
+const Products: CollectionConfig = {
   slug: 'products',
 
   admin: {
@@ -16,7 +15,6 @@ export const Products: CollectionConfig = {
         {
           name: 'active',
           type: 'checkbox',
-          label: 'Active',
           defaultValue: true,
           admin: {
             width: '30%',
@@ -25,18 +23,11 @@ export const Products: CollectionConfig = {
         {
           name: 'foodType',
           type: 'radio',
-          label: false,
           defaultValue: 'veg',
           required: true,
           options: [
-            {
-              label: 'Veg',
-              value: 'veg',
-            },
-            {
-              label: 'Non-Veg',
-              value: 'non-veg',
-            },
+            { label: 'Veg', value: 'veg' },
+            { label: 'Non-Veg', value: 'non-veg' },
           ],
           admin: {
             layout: 'horizontal',
@@ -86,43 +77,35 @@ export const Products: CollectionConfig = {
           type: 'number',
           required: true,
         },
-
         {
           name: 'price',
           type: 'number',
           admin: {
             readOnly: true,
-            description: 'Auto calculated (rate × quantity)',
           },
         },
-
         {
           name: 'discount',
           type: 'number',
           defaultValue: 0,
         },
-
         {
           name: 'tax',
           type: 'number',
           defaultValue: 0,
         },
-
         {
           name: 'netPrice',
           type: 'number',
           admin: {
             readOnly: true,
-            description: 'Auto calculated (price − discount + tax)',
           },
         },
-
         {
           name: 'stock',
           type: 'number',
           defaultValue: 0,
         },
-
         {
           name: 'stockStatus',
           type: 'select',
@@ -132,7 +115,6 @@ export const Products: CollectionConfig = {
             { label: 'Out of Stock', value: 'out-of-stock' },
           ],
         },
-
       ],
     },
     {
@@ -149,9 +131,8 @@ export const Products: CollectionConfig = {
       type: 'text',
       unique: true,
       admin: {
-        position: 'sidebar',
         readOnly: true,
-        description: 'Auto generated barcode',
+        position: 'sidebar',
       },
     },
     {
@@ -162,41 +143,36 @@ export const Products: CollectionConfig = {
         position: 'sidebar',
       },
     },
-
   ],
 
-hooks: {
-  beforeChange: [
-    generateBarcode,
+  hooks: {
+    beforeChange: [
+      generateBarcode,
+      ({ data }) => {
+        if (data.variants && Array.isArray(data.variants)) {
+          data.variants = data.variants.map((variant: any) => {
+            const rate = variant.rate || 0
+            const quantity = variant.quantity || 0
+            const discount = variant.discount || 0
+            const tax = variant.tax || 0
 
-    ({ data }) => {
+            const price = rate * quantity
+            const netPrice = price - discount + tax
 
-      if (data.variants && Array.isArray(data.variants)) {
+            return {
+              ...variant,
+              price,
+              netPrice,
+            }
+          })
+        }
 
-        data.variants = data.variants.map((variant: any) => {
+        return data
+      },
+    ],
+  },
 
-          const rate = variant.rate || 0;
-          const quantity = variant.quantity || 0;
-          const discount = variant.discount || 0;
-          const tax = variant.tax || 0;
-
-          const price = rate * quantity;
-          const netPrice = price - discount + tax;
-
-          return {
-            ...variant,
-            price,
-            netPrice,
-          };
-
-        });
-
-      }
-
-      return data;
-    },
-  ],
-},
+  timestamps: true,
 }
 
-export default Products;
+export default Products
