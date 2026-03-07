@@ -167,7 +167,8 @@ export interface User {
  */
 export interface Media {
   id: string;
-  alt: string;
+  name: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -219,24 +220,15 @@ export interface Product {
     unit: 'g' | 'kg' | 'pcs';
     quantity: number;
     rate: number;
-    /**
-     * Auto calculated (rate × quantity)
-     */
     price?: number | null;
     discount?: number | null;
     tax?: number | null;
-    /**
-     * Auto calculated (price − discount + tax)
-     */
     netPrice?: number | null;
     stock?: number | null;
     stockStatus?: ('in-stock' | 'low-stock' | 'out-of-stock') | null;
     id?: string | null;
   }[];
   category: string | Category;
-  /**
-   * Auto generated barcode
-   */
   productBarcode?: string | null;
   hsnCode?: string | null;
   updatedAt: string;
@@ -254,7 +246,7 @@ export interface Category {
   /**
    * Upload a category image
    */
-  image: string | Media;
+  image?: (string | null) | Media;
   description?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -524,6 +516,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  name?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
