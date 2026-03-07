@@ -3,60 +3,42 @@
 import React, { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 
-const TablePaymentQR = ({ tableSlug }: { tableSlug: string }) => {
+type TablePaymentQRProps = {
+  tableSlug: string
+}
 
+const TablePaymentQR: React.FC<TablePaymentQRProps> = ({ tableSlug }) => {
   const [qr, setQr] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-
-    const generatePaymentQR = async () => {
-
+    const generateTableQR = async () => {
       try {
-        const res = await fetch(
-          `/api/payments?where[tableNumber][equals]=${tableSlug}&limit=1&sort=-createdAt`
-        )
+        const baseUrl =
+          process.env.NEXT_PUBLIC_FRONTEND_URL ||
+          'http://localhost:3000' 
+        const tableUrl = `${baseUrl}/table/${tableSlug}`
 
-        const data = await res.json()
-
-        const payment = data?.docs?.[0]
-
-        if (!payment) {
-          setLoading(false)
-          return
-        }
-
-        const paymentURL =
-          `upi://pay?pa=hotel@upi` +
-          `&pn=HotelName` +
-          `&am=${payment.amount}` +
-          `&tn=${payment.tableNumber}`
-
-        const qrImage = await QRCode.toDataURL(paymentURL)
+        const qrImage = await QRCode.toDataURL(tableUrl)
 
         setQr(qrImage)
-
       } catch (err) {
-
-        console.error(err)
-
+        console.error('Failed to generate QR:', err)
       }
-
       setLoading(false)
     }
 
-    generatePaymentQR()
-
+    generateTableQR()
   }, [tableSlug])
 
-  if (loading) return <div>Loading payment QR...</div>
-
-  if (!qr) return <div>No payment found</div>
+  if (loading) return <div className="text-center p-4">Generating QR...</div>
+  if (!qr) return <div className="text-center p-4 text-red-500">Failed to generate QR</div>
 
   return (
-    <div>
-      <h3>Scan to Pay</h3>
-      <img src={qr} width={250} />
+    <div className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold mb-3 text-orange-600">Scan to Order</h3>
+      <img src={qr} width={250} height={250} alt={`QR for table ${tableSlug}`} />
+      <p className="mt-2 text-gray-600 font-medium">Table: {tableSlug}</p>
     </div>
   )
 }

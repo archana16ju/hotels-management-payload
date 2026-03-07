@@ -25,7 +25,6 @@ export default function TablePage({ params }: any) {
   const [search, setSearch] = useState('');
   const [cart, setCart] = useState<{ product: Product; qty: number }[]>([]);
 
-  // Fetch categories
   useEffect(() => {
     async function fetchCategories() {
       try {
@@ -40,7 +39,6 @@ export default function TablePage({ params }: any) {
     fetchCategories();
   }, []);
 
-  // Fetch products
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -106,16 +104,14 @@ export default function TablePage({ params }: any) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-orange-100 font-sans">
 
-      {/* HEADER */}
       <div className="flex flex-col items-center justify-center p-6 bg-orange-500 text-white shadow-md sticky top-0 z-10 rounded-b-lg">
         <h2 className="text-2xl font-bold tracking-wide mb-1">Table: {tableId}</h2>
         <div className="flex gap-6 text-2xl font-semibold">
-          <span>👤</span>
-          <span>🛒 {cart.reduce((sum, i) => sum + i.qty, 0)}</span>
+          <span> login 👤</span>
+          <span> cart 🛒 {cart.reduce((sum, i) => sum + i.qty, 0)}</span>
         </div>
       </div>
 
-      {/* SEARCH */}
       <div className="p-6 flex justify-center">
         <input
           placeholder="Search your favorite food..."
@@ -125,7 +121,6 @@ export default function TablePage({ params }: any) {
         />
       </div>
 
-      {/* CATEGORIES */}
       <div className="flex gap-4 overflow-x-auto px-6 py-4">
         {categories.map((cat) => (
           <button
@@ -149,7 +144,6 @@ export default function TablePage({ params }: any) {
         ))}
       </div>
 
-      {/* PRODUCTS GRID */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 pb-24">
         {filteredProducts.map((item) => (
           <div
@@ -175,7 +169,6 @@ export default function TablePage({ params }: any) {
         ))}
       </div>
 
-      {/* CART DRAWER */}
       {cart.length > 0 && (
         <div className="fixed bottom-0 right-0 left-0 md:right-6 md:w-80 bg-white shadow-lg rounded-t-xl p-5 z-20">
           <h3 className="text-xl font-bold mb-3 text-center text-orange-600">
