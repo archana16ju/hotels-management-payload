@@ -7,7 +7,10 @@ export const Categories: CollectionConfig = {
     group: 'Products',
   },
   access: {
-    read: () => true,
+     read: () => true,
+     create: () => true,
+     update: () => true,
+     delete: () => true,
   },
   fields: [
     {
@@ -50,7 +53,6 @@ export const Categories: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: false, 
       admin: {
         description: 'Upload a category image',
       },

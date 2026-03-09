@@ -7,7 +7,7 @@ import sharp from 'sharp';
 
 
 import Users from './collections/Users';
-import Media from './collections/Media';
+import{ Media } from './collections/Media';
 import Orders from './collections/Order';
 import {Categories} from './collections/categories';
 import CompanyProfile from './collections/CompanyProfile';
