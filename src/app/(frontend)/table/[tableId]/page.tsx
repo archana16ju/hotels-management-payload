@@ -102,109 +102,162 @@ export default function TablePage({ params }: any) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-orange-100 font-sans">
+  <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
 
-      <div className="flex flex-col items-center justify-center p-6 bg-orange-500 text-white shadow-md sticky top-0 z-10 rounded-b-lg">
-        <h2 className="text-2xl font-bold tracking-wide mb-1">Table: {tableId}</h2>
-        <div className="flex gap-6 text-2xl font-semibold">
-          <span> login 👤</span>
-          <span> cart 🛒 {cart.reduce((sum, i) => sum + i.qty, 0)}</span>
+    {/* HEADER */}
+    <div className="w-full bg-white shadow-md sticky top-0 z-20">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        <h2 className="text-xl font-bold text-gray-800">
+          Table: {tableId}
+        </h2>
+
+        <div className="flex items-center gap-6 text-lg font-semibold">
+          <span className="cursor-pointer">👤 Login</span>
+          <span className="cursor-pointer">
+            🛒 {cart.reduce((sum, i) => sum + i.qty, 0)}
+          </span>
         </div>
       </div>
-
-      <div className="p-6 flex justify-center">
-        <input
-          placeholder="Search your favorite food..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="border-2 border-orange-400 focus:border-orange-600 focus:ring-2 focus:ring-orange-300 p-3 rounded-full w-full max-w-md shadow-md"
-        />
-      </div>
-
-      <div className="flex gap-4 overflow-x-auto px-6 py-4">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            className={`flex flex-col items-center border-2 p-3 rounded-lg transition-transform ${
-              selectedCategory === cat.id
-                ? 'bg-orange-500 text-white scale-105 shadow-lg'
-                : 'bg-white text-gray-800 hover:scale-105 hover:shadow-md'
-            }`}
-            onClick={() => setSelectedCategory(cat.id)}
-          >
-            {cat.image?.url && (
-              <img
-                src={cat.image.url}
-                alt={cat.name}
-                className="w-16 h-16 object-cover rounded-full mb-2 border-2 border-orange-300"
-              />
-            )}
-            <span className="font-semibold">{cat.name}</span>
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 pb-24">
-        {filteredProducts.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white p-4 rounded-xl shadow-md flex flex-col items-center hover:shadow-xl transition-shadow"
-          >
-            {item.image?.url && (
-              <img
-                src={item.image.url}
-                alt={item.name}
-                className="w-36 h-36 object-cover rounded-xl mb-3"
-              />
-            )}
-            <h3 className="font-semibold text-center text-lg">{item.name}</h3>
-            <p className="text-orange-600 font-bold mt-1">₹{item.price}</p>
-            <button
-              className="bg-orange-500 text-white mt-3 px-4 py-2 rounded-full hover:bg-orange-600 w-full"
-              onClick={() => addToCart(item)}
-            >
-              Add to Cart
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {cart.length > 0 && (
-        <div className="fixed bottom-0 right-0 left-0 md:right-6 md:w-80 bg-white shadow-lg rounded-t-xl p-5 z-20">
-          <h3 className="text-xl font-bold mb-3 text-center text-orange-600">
-            Cart ({cart.reduce((sum, i) => sum + i.qty, 0)})
-          </h3>
-          <ul className="max-h-52 overflow-y-auto mb-3">
-            {cart.map((i) => (
-              <li key={i.product.id} className="flex justify-between items-center mb-2">
-                <div>
-                  <span className="font-medium">{i.product.name}</span>
-                  <span> x{i.qty}</span>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <span className="font-semibold text-orange-600">₹{i.product.price * i.qty}</span>
-                  <button
-                    className="text-red-500 font-bold"
-                    onClick={() => removeFromCart(i.product.id)}
-                  >
-                    ✕
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="flex justify-between font-bold mb-3">
-            <span>Total</span>
-            <span className="text-orange-600">₹{total}</span>
-          </div>
-          <button
-            className="w-full bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 font-semibold"
-            onClick={placeOrder}
-          >
-            Place Order
-          </button>
-        </div>
-      )}
     </div>
-  );
+
+
+    {/* SEARCH BAR CENTER */}
+    <div className="w-full flex justify-center mt-8">
+      <input
+        placeholder="Search your favorite food..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="
+          w-[500px]
+          max-w-[90%]
+          p-4
+          rounded-full
+          border
+          border-gray-300
+          shadow-md
+          focus:outline-none
+          focus:ring-2
+          focus:ring-purple-400
+        "
+      />
+    </div>
+
+
+    {/* CATEGORY SCROLL */}
+    <div className="max-w-6xl mx-auto flex gap-4 overflow-x-auto py-6 px-6">
+
+      {categories.map((cat) => (
+        <button
+          key={cat.id}
+          onClick={() => setSelectedCategory(cat.id)}
+          className={`flex flex-col items-center p-3 rounded-xl min-w-[110px] transition
+          
+          ${
+            selectedCategory === cat.id
+              ? "bg-purple-600 text-white shadow-lg"
+              : "bg-white hover:shadow-md"
+          }
+          
+          `}
+        >
+          {cat.image?.url && (
+            <img
+              src={cat.image.url}
+              alt={cat.name}
+              className="w-16 h-16 rounded-full object-cover mb-2"
+            />
+          )}
+
+          <span className="text-sm font-semibold">{cat.name}</span>
+        </button>
+      ))}
+
+    </div>
+
+
+    {/* PRODUCT GRID */}
+    <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 pb-32">
+
+      {filteredProducts.map((item) => (
+        <div
+          key={item.id}
+          className="bg-white rounded-xl shadow-md hover:shadow-xl transition p-4 flex flex-col items-center"
+        >
+          {item.image?.url && (
+            <img
+              src={item.image.url}
+              alt={item.name}
+              className="w-32 h-32 object-cover rounded-lg mb-3"
+            />
+          )}
+
+          <h3 className="font-semibold text-center">{item.name}</h3>
+
+          <p className="text-purple-600 font-bold mt-1">
+            ₹{item.price}
+          </p>
+
+          <button
+            onClick={() => addToCart(item)}
+            className="mt-3 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full w-full"
+          >
+            Add to Cart
+          </button>
+        </div>
+      ))}
+
+    </div>
+
+
+    {/* CART */}
+    {cart.length > 0 && (
+      <div className="fixed bottom-0 right-0 left-0 md:left-auto md:w-[350px] bg-white shadow-2xl p-6 rounded-t-xl">
+
+        <h3 className="text-xl font-bold mb-4 text-purple-600">
+          Cart ({cart.reduce((sum, i) => sum + i.qty, 0)})
+        </h3>
+
+        <ul className="max-h-60 overflow-y-auto mb-4">
+          {cart.map((i) => (
+            <li
+              key={i.product.id}
+              className="flex justify-between items-center mb-2"
+            >
+              <span>
+                {i.product.name} x{i.qty}
+              </span>
+
+              <div className="flex gap-3 items-center">
+                <span className="font-semibold">
+                  ₹{i.product.price * i.qty}
+                </span>
+
+                <button
+                  onClick={() => removeFromCart(i.product.id)}
+                  className="text-red-500"
+                >
+                  ✕
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex justify-between font-bold mb-3">
+          <span>Total</span>
+          <span>₹{total}</span>
+        </div>
+
+        <button
+          onClick={placeOrder}
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-full"
+        >
+          Place Order
+        </button>
+
+      </div>
+    )}
+
+  </div>
+)
 }
