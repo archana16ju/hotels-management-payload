@@ -182,10 +182,10 @@ export default function TablePage({ params }: any) {
         >
           {item.image?.url && (
             <img
-           src={`${process.env.NEXT_PUBLIC_SERVER_URL}${item.image.url}`}
-           alt={item.name}
-           className="w-16 h-16 object-cover rounded-full mb-2 border-2 border-orange-300"
-             />
+              src={item.image.url}
+              alt={item.name}
+              className="w-32 h-32 object-cover rounded-lg mb-3"
+            />
           )}
 
           <h3 className="font-semibold text-center">{item.name}</h3>
