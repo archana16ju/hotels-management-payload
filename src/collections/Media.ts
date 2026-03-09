@@ -1,17 +1,16 @@
 import type { CollectionConfig } from 'payload'
-import path from 'path'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-
   access: {
     read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
-
   upload: {
-  staticDir: 'media',
+    staticDir: 'media',
   },
-
   fields: [
     {
       name: 'alt',
