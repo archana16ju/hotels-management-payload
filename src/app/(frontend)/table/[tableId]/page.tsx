@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+
 type Product = {
   id: string;
   name: string;
@@ -104,7 +105,6 @@ export default function TablePage({ params }: any) {
   return (
   <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
 
-    {/* HEADER */}
     <div className="w-full bg-white shadow-md sticky top-0 z-20">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         <h2 className="text-xl font-bold text-gray-800">
@@ -121,7 +121,6 @@ export default function TablePage({ params }: any) {
     </div>
 
 
-    {/* SEARCH BAR CENTER */}
     <div className="w-full flex justify-center mt-8">
       <input
         placeholder="Search your favorite food..."
@@ -143,7 +142,6 @@ export default function TablePage({ params }: any) {
     </div>
 
 
-    {/* CATEGORY SCROLL */}
     <div className="max-w-6xl mx-auto flex gap-4 overflow-x-auto py-6 px-6">
 
       {categories.map((cat) => (
@@ -175,7 +173,6 @@ export default function TablePage({ params }: any) {
     </div>
 
 
-    {/* PRODUCT GRID */}
     <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 pb-32">
 
       {filteredProducts.map((item) => (
@@ -185,10 +182,10 @@ export default function TablePage({ params }: any) {
         >
           {item.image?.url && (
             <img
-              src={item.image.url}
-              alt={item.name}
-              className="w-32 h-32 object-cover rounded-lg mb-3"
-            />
+           src={`${process.env.NEXT_PUBLIC_SERVER_URL}${item.image.url}`}
+           alt={item.name}
+           className="w-16 h-16 object-cover rounded-full mb-2 border-2 border-orange-300"
+             />
           )}
 
           <h3 className="font-semibold text-center">{item.name}</h3>
