@@ -6,6 +6,7 @@ export const Categories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Products',
+    defaultColumns: ['name', 'image', 'slug', 'parent'],
   },
 
   access: {
