@@ -1,41 +1,27 @@
-import type { CollectionConfig } from 'payload'
-
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
   slug: 'media',
-
   admin: {
-    useAsTitle: 'alt',
+    useAsTitle: 'name',
   },
-
   access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    read: () => true, 
   },
-
-  upload: {
-    staticDir: path.resolve(dirname, '../../public/media'),
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-      },
-    ],
-  },
-
   fields: [
     {
-      name: 'alt',
+      name: 'name',
       type: 'text',
       required: true,
     },
+    {
+      name: 'alt',
+      type: 'text',
+    },
+    {
+      name: 'file',
+      type: 'upload',
+      relationTo: 'media',
+    },
   ],
-}
+};
