@@ -20,6 +20,7 @@
   "dependencies": {
     "@payloadcms/db-mongodb": "3.79.0",
     "@payloadcms/next": "3.79.0",
+    "@payloadcms/plugin-cloud-storage": "^3.79.0",
     "@payloadcms/richtext-lexical": "3.79.0",
     "@payloadcms/ui": "3.79.0",
     "cloudinary": "^2.9.0",
@@ -29,6 +30,7 @@
     "multer": "^2.1.1",
     "next": "15.4.11",
     "payload": "^3.79.0",
+    "payload-cloudinary": "^2.3.0",
     "qrcode": "^1.5.4",
     "react": "19.2.1",
     "react-dom": "19.2.1",
