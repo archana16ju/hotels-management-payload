@@ -23,6 +23,7 @@
     "@payloadcms/plugin-cloud-storage": "^3.79.0",
     "@payloadcms/richtext-lexical": "3.79.0",
     "@payloadcms/ui": "3.79.0",
+    "@vercel/blob": "^2.3.1",
     "cloudinary": "^2.9.0",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",

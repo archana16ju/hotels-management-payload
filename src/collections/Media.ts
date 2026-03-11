@@ -1,24 +1,22 @@
 import type { CollectionConfig } from 'payload'
-import sharp from 'sharp'
+import { put } from '@vercel/blob'
 
 export const Media: CollectionConfig = {
   slug: 'media',
 
-  upload: {
-    mimeTypes: ['image/*'],
-  },
+  upload: false,
 
   hooks: {
     beforeChange: [
-      async ({ req, data, operation }) => {
-        if (operation === 'create' && req.file) {
+      async ({ data, req }) => {
+        const file = req.file
 
-          const compressed = await sharp(req.file.data)
-            .resize({ width: 1200 })
-            .jpeg({ quality: 70 })
-            .toBuffer()
+        if (file) {
+          const blob = await put(file.name, file.data, {
+            access: 'public',
+          })
 
-          req.file.data = compressed
+          data.url = blob.url
         }
 
         return data
@@ -28,9 +26,12 @@ export const Media: CollectionConfig = {
 
   fields: [
     {
+      name: 'url',
+      type: 'text',
+    },
+    {
       name: 'alt',
       type: 'text',
-      required: true,
     },
   ],
 }

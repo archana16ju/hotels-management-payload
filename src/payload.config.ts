@@ -1,5 +1,4 @@
 import { buildConfig } from 'payload';
-import { cloudinaryStorage } from 'payload-cloudinary';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
@@ -21,7 +20,8 @@ import PaymentGateways from './collections/PaymentGateways';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-['PAYLOAD_SECRET','DATABASE_URL','CLOUDINARY_CLOUD_NAME','CLOUDINARY_API_KEY','CLOUDINARY_API_SECRET'].forEach(key => {
+// Required environment variables
+['PAYLOAD_SECRET','DATABASE_URL','BLOB_READ_WRITE_TOKEN'].forEach(key => {
   if (!process.env[key]) throw new Error(`${key} missing!`);
 });
 
@@ -30,29 +30,20 @@ const serverURL: string =
     ? 'http://localhost:3000'
     : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
-const cloudinaryPlugin = cloudinaryStorage({
-  config: {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-    api_key: process.env.CLOUDINARY_API_KEY!,
-    api_secret: process.env.CLOUDINARY_API_SECRET!,
-  },
-  collections: {
-    media: {}, 
-  },
-  folder: 'media',
-});
-
 export default buildConfig({
   serverURL,
+
   cors: [serverURL].filter(Boolean),
   csrf: [serverURL].filter(Boolean),
+
   admin: {
     user: 'users',
     importMap: { baseDir: path.resolve(dirname) },
   },
+
   collections: [
     Users,
-    Media,          
+    Media,
     Orders,
     Categories,
     CompanyProfile,
@@ -63,10 +54,18 @@ export default buildConfig({
     Reviews,
     PaymentGateways,
   ],
+
   editor: lexicalEditor(),
+
   secret: process.env.PAYLOAD_SECRET!,
-  typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
-  db: mongooseAdapter({ url: process.env.DATABASE_URL! }),
+
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
+  },
+
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URL!,
+  }),
+
   sharp,
-  plugins: [cloudinaryPlugin],
 });
