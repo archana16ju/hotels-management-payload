@@ -32,7 +32,6 @@ const serverURL: string =
 
 export default buildConfig({
   serverURL,
-
   cors: [serverURL].filter(Boolean),
   csrf: [serverURL].filter(Boolean),
 
@@ -56,25 +55,22 @@ export default buildConfig({
   ],
 
   editor: lexicalEditor(),
-
   secret: process.env.PAYLOAD_SECRET!,
 
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
 
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URL!,
-  }),
+  db: mongooseAdapter({ url: process.env.DATABASE_URL! }),
 
   sharp,
 
   plugins: [
     vercelBlobStorage({
+      token: process.env.BLOB_READ_WRITE_TOKEN!, 
       collections: {
         media: true, 
       },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],
 });
