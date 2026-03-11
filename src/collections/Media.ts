@@ -35,9 +35,7 @@ export const Media: CollectionConfig = {
     {
       name: 'url',
       type: 'text',
-      admin: {
-        readOnly: true,
-      },
+      admin: { readOnly: true },
     },
   ],
 }
