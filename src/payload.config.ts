@@ -20,7 +20,6 @@ import PaymentGateways from './collections/PaymentGateways';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-// Required environment variables
 ['PAYLOAD_SECRET','DATABASE_URL','BLOB_READ_WRITE_TOKEN'].forEach(key => {
   if (!process.env[key]) throw new Error(`${key} missing!`);
 });
