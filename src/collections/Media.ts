@@ -5,7 +5,7 @@ export const Media: CollectionConfig = {
   slug: 'media',
 
   upload: {
-    disableLocalStorage: true, 
+    disableLocalStorage: true,
     mimeTypes: ['image/*'],
   },
 
@@ -31,7 +31,6 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      required: false,
     },
     {
       name: 'url',
