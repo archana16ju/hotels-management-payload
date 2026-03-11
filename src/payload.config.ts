@@ -71,6 +71,7 @@ export default buildConfig({
       collections: {
         media: true, 
       },
+      access: 'public',
     }),
   ],
 });
