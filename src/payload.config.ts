@@ -1,49 +1,58 @@
 import { buildConfig } from 'payload';
+import { cloudinaryStorage } from 'payload-cloudinary';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
-
 import Users from './collections/Users';
-import{ Media } from './collections/Media';
+import { Media } from './collections/Media';
 import Orders from './collections/Order';
-import {Categories} from './collections/categories';
+import { Categories } from './collections/categories';
 import CompanyProfile from './collections/CompanyProfile';
-import {QrSettings} from './collections/QrSettings';
-import  Tables from './collections/Tables';
-import  Products from './collections/products';
+import { QrSettings } from './collections/QrSettings';
+import Tables from './collections/Tables';
+import Products from './collections/products';
 import Payments from './collections/payments';
 import Reviews from './collections/reviews';
 import PaymentGateways from './collections/PaymentGateways';
 
-
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-if (!process.env.PAYLOAD_SECRET) {
-  throw new Error('PAYLOAD_SECRET environment variable is missing!');
-}
+['PAYLOAD_SECRET','DATABASE_URL','CLOUDINARY_CLOUD_NAME','CLOUDINARY_API_KEY','CLOUDINARY_API_SECRET'].forEach(key => {
+  if (!process.env[key]) throw new Error(`${key} missing!`);
+});
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is missing!');
-}
+const serverURL: string =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
+const cloudinaryPlugin = cloudinaryStorage({
+  config: {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+    api_key: process.env.CLOUDINARY_API_KEY!,
+    api_secret: process.env.CLOUDINARY_API_SECRET!,
+  },
+  collections: {
+    media: {}, 
+  },
+  folder: 'media',
+});
 
 export default buildConfig({
-  serverURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : (process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
-  cors: ['http://localhost:3000', process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  csrf: ['http://localhost:3000', process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
+  serverURL,
+  cors: [serverURL].filter(Boolean),
+  csrf: [serverURL].filter(Boolean),
   admin: {
-  user: 'users',
-  importMap: {
-    baseDir: path.resolve(dirname),
-  },
+    user: 'users',
+    importMap: { baseDir: path.resolve(dirname) },
   },
   collections: [
     Users,
-    Media,
+    Media,          
     Orders,
     Categories,
     CompanyProfile,
@@ -55,13 +64,9 @@ export default buildConfig({
     PaymentGateways,
   ],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET,
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URL,
-  }),
+  secret: process.env.PAYLOAD_SECRET!,
+  typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
+  db: mongooseAdapter({ url: process.env.DATABASE_URL! }),
   sharp,
-  plugins: [],
+  plugins: [cloudinaryPlugin],
 });

@@ -1,23 +1,11 @@
-import type { CollectionConfig } from 'payload'
-
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
   slug: 'media',
-
-  admin: {
-    useAsTitle: 'alt',
-  },
   access: {
     read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
   },
+      upload: true,
   fields: [
     {
       name: 'alt',
@@ -25,4 +13,4 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-}
+};
