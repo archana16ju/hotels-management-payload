@@ -4,11 +4,14 @@ import { put } from '@vercel/blob'
 export const Media: CollectionConfig = {
   slug: 'media',
 
-  upload: false,
+  upload: {
+    disableLocalStorage: true, 
+    mimeTypes: ['image/*'],
+  },
 
   hooks: {
     beforeChange: [
-      async ({ data, req }) => {
+      async ({ req, data }) => {
         const file = req.file
 
         if (file) {
@@ -26,12 +29,16 @@ export const Media: CollectionConfig = {
 
   fields: [
     {
-      name: 'url',
-      type: 'text',
-    },
-    {
       name: 'alt',
       type: 'text',
+      required: false,
+    },
+    {
+      name: 'url',
+      type: 'text',
+      admin: {
+        readOnly: true,
+      },
     },
   ],
 }
