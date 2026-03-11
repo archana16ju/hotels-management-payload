@@ -27,7 +27,7 @@
     "@vercel/blob": "^2.3.1",
     "cloudinary": "^2.9.0",
     "cross-env": "^7.0.3",
-    "dotenv": "16.4.7",
+    "dotenv": "^16.4.7",
     "graphql": "^16.8.1",
     "multer": "^2.1.1",
     "next": "15.4.11",
