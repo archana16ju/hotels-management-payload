@@ -10,6 +10,7 @@ export const Media: CollectionConfig = {
 
   admin: {
     useAsTitle: 'alt',
+    defaultColumns: ['alt', 'category', 'updatedAt'],
   },
 
   fields: [
@@ -17,29 +18,22 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
+      label: 'Image Alt Text',
     },
+
     {
-      name: 'folder',
-      type: 'select',
-      required: true,
-      options: [
-        { label: 'Products', value: 'products' },
-        { label: 'Categories', value: 'categories' },
-      ],
-      admin: {
-        description: 'Select where the image should be stored',
-      },
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+      required: false,
+      label: 'Image Category',
+    },
+
+    {
+      name: 'tags',
+      type: 'text',
+      hasMany: true,
+      label: 'Image Tags',
     },
   ],
-
-  hooks: {
-    beforeChange: [
-      async ({ data, req }) => {
-        if (req.file && data?.folder) {
-          req.file.name = `${data.folder}/${req.file.name}`
-        }
-        return data
-      },
-    ],
-  },
 }
