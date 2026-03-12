@@ -6,6 +6,7 @@ const Products: CollectionConfig = {
 
   admin: {
     useAsTitle: 'name',
+    group: 'Products',
   },
 
   fields: [
