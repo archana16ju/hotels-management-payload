@@ -23,8 +23,8 @@ const Products: CollectionConfig = {
         {
           name: 'foodType',
           type: 'radio',
-          defaultValue: 'veg',
           required: true,
+          defaultValue: 'veg',
           options: [
             { label: 'Veg', value: 'veg' },
             { label: 'Non-Veg', value: 'non-veg' },
@@ -36,11 +36,13 @@ const Products: CollectionConfig = {
         },
       ],
     },
+
     {
       name: 'name',
       type: 'text',
       required: true,
     },
+
     {
       name: 'images',
       type: 'upload',
@@ -48,10 +50,26 @@ const Products: CollectionConfig = {
       hasMany: true,
       required: true,
     },
+
     {
       name: 'description',
       type: 'textarea',
     },
+
+    {
+      name: 'preparationTime',
+      type: 'number',
+      label: 'Preparation Time (minutes)',
+      defaultValue: 10,
+    },
+
+    {
+      name: 'featured',
+      type: 'checkbox',
+      label: 'Featured Product',
+      defaultValue: false,
+    },
+
     {
       name: 'variants',
       type: 'array',
@@ -117,6 +135,17 @@ const Products: CollectionConfig = {
         },
       ],
     },
+
+    {
+      name: 'defaultVariant',
+      type: 'number',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+        description: 'Default variant index (0 = first variant)',
+      },
+    },
+
     {
       name: 'category',
       type: 'relationship',
@@ -126,6 +155,7 @@ const Products: CollectionConfig = {
         position: 'sidebar',
       },
     },
+
     {
       name: 'productBarcode',
       type: 'text',
@@ -135,6 +165,7 @@ const Products: CollectionConfig = {
         position: 'sidebar',
       },
     },
+
     {
       name: 'hsnCode',
       type: 'text',
@@ -148,8 +179,9 @@ const Products: CollectionConfig = {
   hooks: {
     beforeChange: [
       generateBarcode,
+
       ({ data }) => {
-        if (data.variants && Array.isArray(data.variants)) {
+        if (data?.variants && Array.isArray(data.variants)) {
           data.variants = data.variants.map((variant: any) => {
             const rate = variant.rate || 0
             const quantity = variant.quantity || 0

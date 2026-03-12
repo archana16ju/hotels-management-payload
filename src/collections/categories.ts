@@ -24,7 +24,7 @@ export const Categories: CollectionConfig = {
       type: 'text',
       unique: true,
       required: true,
-      admin: { position: 'sidebar', description: 'Auto-generated from name, lowercase, no spaces or special chars' },
+      admin: { position: 'sidebar', description: 'Auto-generated from name' },
 hooks: {
   beforeValidate: [
     ({ data }) => {
