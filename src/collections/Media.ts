@@ -10,7 +10,6 @@ export const Media: CollectionConfig = {
 
   admin: {
     useAsTitle: 'alt',
-    defaultColumns: ['alt', 'category', 'updatedAt'],
   },
 
   fields: [
@@ -18,22 +17,28 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
-      label: 'Image Alt Text',
-    },
-
-    {
-      name: 'category',
-      type: 'relationship',
-      relationTo: 'categories',
-      required: false,
-      label: 'Image Category',
-    },
-
-    {
-      name: 'tags',
-      type: 'text',
-      hasMany: true,
-      label: 'Image Tags',
     },
   ],
+
+  hooks: {
+    beforeChange: [
+      async ({ req }) => {
+        if (!req.file) return
+
+        const referer = req.headers.get('referer') || ''
+
+        let folder = 'media'
+
+        if (referer.includes('products')) {
+          folder = 'products'
+        }
+
+        if (referer.includes('categories')) {
+          folder = 'categories'
+        }
+
+        req.file.name = `${folder}/${req.file.name}`
+      },
+    ],
+  },
 }

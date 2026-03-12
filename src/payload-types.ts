@@ -75,6 +75,7 @@ export interface Config {
     'qr-settings': QrSetting;
     tables: Table;
     products: Product;
+    'product-media': ProductMedia;
     payments: Payment;
     reviews: Review;
     'payment-gateways': PaymentGateway;
@@ -93,6 +94,7 @@ export interface Config {
     'qr-settings': QrSettingsSelect<false> | QrSettingsSelect<true>;
     tables: TablesSelect<false> | TablesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    'product-media': ProductMediaSelect<false> | ProductMediaSelect<true>;
     payments: PaymentsSelect<false> | PaymentsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     'payment-gateways': PaymentGatewaysSelect<false> | PaymentGatewaysSelect<true>;
@@ -167,7 +169,9 @@ export interface User {
  */
 export interface Media {
   id: string;
-  alt?: string | null;
+  alt: string;
+  category?: (string | null) | Category;
+  tags?: string[] | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -179,6 +183,23 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  name: string;
+  /**
+   * Auto-generated from name
+   */
+  slug: string;
+  parent?: (string | null) | Category;
+  image?: (string | null) | Media;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -213,8 +234,10 @@ export interface Product {
   active?: boolean | null;
   foodType: 'veg' | 'non-veg';
   name: string;
-  images: (string | Media)[];
+  images: (string | ProductMedia)[];
   description?: string | null;
+  preparationTime?: number | null;
+  featured?: boolean | null;
   variants: {
     unit: 'g' | 'kg' | 'pcs';
     quantity: number;
@@ -227,6 +250,10 @@ export interface Product {
     stockStatus?: ('in-stock' | 'low-stock' | 'out-of-stock') | null;
     id?: string | null;
   }[];
+  /**
+   * Default variant index (0 = first variant)
+   */
+  defaultVariant?: number | null;
   category: string | Category;
   productBarcode?: string | null;
   hsnCode?: string | null;
@@ -235,20 +262,22 @@ export interface Product {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "product-media".
  */
-export interface Category {
+export interface ProductMedia {
   id: string;
-  name: string;
-  /**
-   * Auto-generated from name, lowercase, no spaces or special chars
-   */
-  slug: string;
-  parent?: (string | null) | Category;
-  image?: (string | null) | Media;
-  description?: string | null;
+  alt: string;
   updatedAt: string;
   createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -434,6 +463,10 @@ export interface PayloadLockedDocument {
         value: string | Product;
       } | null)
     | ({
+        relationTo: 'product-media';
+        value: string | ProductMedia;
+      } | null)
+    | ({
         relationTo: 'payments';
         value: string | Payment;
       } | null)
@@ -516,6 +549,8 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  category?: T;
+  tags?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -646,6 +681,8 @@ export interface ProductsSelect<T extends boolean = true> {
   name?: T;
   images?: T;
   description?: T;
+  preparationTime?: T;
+  featured?: T;
   variants?:
     | T
     | {
@@ -660,11 +697,30 @@ export interface ProductsSelect<T extends boolean = true> {
         stockStatus?: T;
         id?: T;
       };
+  defaultVariant?: T;
   category?: T;
   productBarcode?: T;
   hsnCode?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-media_select".
+ */
+export interface ProductMediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
