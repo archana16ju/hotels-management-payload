@@ -65,6 +65,7 @@ export default buildConfig({
 
   sharp,
 
+  /*
   plugins: [
     vercelBlobStorage({
       token: process.env.BLOB_READ_WRITE_TOKEN!, 
@@ -74,4 +75,6 @@ export default buildConfig({
       access: 'public',
     }),
   ],
+  */
 });
+// trigger reload 1773397612394

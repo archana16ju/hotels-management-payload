@@ -1,0 +1,36 @@
+2026-03-14T11:01:32.276Z - [MEDIA] Referer: http://localhost:3000/admin/collections/categories/create
+2026-03-14T11:01:32.277Z - [MEDIA] Detected folder: categories
+2026-03-14T11:01:32.278Z - [MEDIA] Moved briyani.avif → categories
+2026-03-14T11:01:32.279Z - [MEDIA] Updating DB URLs
+2026-03-14T11:01:34.323Z - [MEDIA] Referer: http://localhost:3000/admin/collections/categories/create
+2026-03-14T11:01:34.323Z - [MEDIA] Detected folder: categories
+2026-03-14T11:01:34.324Z - [MEDIA] Moved briyani.avif → categories
+2026-03-14T11:01:34.324Z - [MEDIA] Updating DB URLs
+2026-03-14T11:01:35.343Z - [MEDIA] Referer: http://localhost:3000/admin/collections/categories/create
+2026-03-14T11:01:35.345Z - [MEDIA] Detected folder: categories
+2026-03-14T11:01:35.349Z - [MEDIA] Moved briyani.avif → categories
+2026-03-14T11:01:35.350Z - [MEDIA] Updating DB URLs
+2026-03-14T11:02:01.253Z - [MEDIA] Referer: http://localhost:3000/admin/collections/media/create
+2026-03-14T11:02:01.254Z - [MEDIA] Detected folder: 
+2026-03-14T11:02:01.254Z - [MEDIA] No subfolder detected, keeping file in root media folder.
+2026-03-14T11:06:27.252Z - [MEDIA] Referer: http://localhost:3000/admin/collections/products/create
+2026-03-14T11:06:27.254Z - [MEDIA] Detected folder: product
+2026-03-14T11:06:27.255Z - [MEDIA] Moved vanila cake.jpeg → product
+2026-03-14T11:06:27.255Z - [MEDIA] Updating DB URLs
+2026-03-14T11:06:45.918Z - [MEDIA] Referer: http://localhost:3000/admin/collections/products/create
+2026-03-14T11:06:45.918Z - [MEDIA] Detected folder: product
+2026-03-14T11:06:45.919Z - [MEDIA] Moved vanila cake.jpeg → product
+2026-03-14T11:06:45.920Z - [MEDIA] Updating DB URLs
+2026-03-14T11:07:15.685Z - [MEDIA] Referer: http://localhost:3000/admin/collections/categories/create
+2026-03-14T11:07:15.685Z - [MEDIA] Detected folder: categories
+2026-03-14T11:07:15.686Z - [MEDIA] Moved cakes.webp → categories
+2026-03-14T11:07:15.686Z - [MEDIA] Updating DB URLs
+2026-03-14T11:07:27.359Z - [MEDIA] Referer: http://localhost:3000/admin/collections/media/create
+2026-03-14T11:07:27.359Z - [MEDIA] Detected folder: 
+2026-03-14T11:07:27.359Z - [MEDIA] No subfolder detected, keeping file in root media folder.
+2026-03-14T11:07:38.642Z - [MEDIA] Referer: http://localhost:3000/admin/collections/media/create
+2026-03-14T11:07:38.643Z - [MEDIA] Detected folder: 
+2026-03-14T11:07:38.643Z - [MEDIA] No subfolder detected, keeping file in root media folder.
+2026-03-14T11:07:55.374Z - [MEDIA] Referer: http://localhost:3000/admin/collections/media/create
+2026-03-14T11:07:55.374Z - [MEDIA] Detected folder: 
+2026-03-14T11:07:55.374Z - [MEDIA] No subfolder detected, keeping file in root media folder.
